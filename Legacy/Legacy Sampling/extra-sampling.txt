@@ -1,0 +1,16 @@
+% Count outcomes given by sampling (ie messages sent from Alice to Bob)
+for j = 1:length(Y)
+    v = indlm(n,Y(j));
+    W_rho_est(v(1), v(2)) = W_rho_est(v(1), v(2)) + 1;
+end
+W_rho_est = W_rho_est/length(Y); %normalize matrix
+
+% Bob's approximate recreation of rho from Wigner matrix estimate
+for j = 1:n 
+    for k = 1:n
+        rho_est = rho_est + W_rho_est(j,k)*A(:,:,j,k);
+    end
+end
+
+% comparison of actual and approximate density matrices
+norm(rho - rho_est)
