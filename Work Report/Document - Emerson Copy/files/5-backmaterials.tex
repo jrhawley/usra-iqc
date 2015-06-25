@@ -1,0 +1,156 @@
+\documentclass[../3Wworkreport.tex]{subfiles}
+\begin{document}
+\nocite{Nielsen2010, gottesman2013, Wolf2012}
+
+\newpage
+\phantomsection
+\renewbibmacro{in:}{}
+\printbibliography[title=References]
+\addcontentsline{toc}{chapter}{\protect{References}}
+\newpage
+
+
+\begin{appendices}
+%\addcontentsline{toc}{chapter}{\protect{Appendices}}
+%\renewcommand{\thesection}{\Alph{section}}
+
+\chapter{The Stabilizer Sub-theory}
+\label{app:stabilizer}
+
+The stabilizers states are the set of eigenstates of the Weyl-Heisenberg operators. The set of Weyl-Heisenberg operators is defined as follows:
+\begin{equation}
+	\mathcal{D} = \{D_{x,z} = \omega^{-2^{-1}xz}Z^zX^x | x,z \in \mathbb{Z}_d\}
+\end{equation}
+where $\omega = e^{\frac{i2\pi}{d}}$ and $2^{-1}$ is the multiplicative inverse of 2 modulo $d$. $X$ and $Z$ are $d$-dimensional generalizations of the two-dimensional Pauli matrices $X$ and $Z$, and are defined by their action on basis vectors.
+\begin{alignat}{1}
+	X\ket{k} = \ket{k + 1 \text{ (mod }d)}\\
+	Z\ket{k} = \omega^k\ket{k}
+\end{alignat}
+Equivalently, their matrices take the forms
+\begin{equation}
+Z = \left( \begin{array}{cccc}
+	1 & 0 & ... & 0\\
+	0 & e^{\frac{i2\pi}{d}} &  & \vdots\\
+	\vdots & & \ddots & \\
+	0 & ... & 0 & e^{\frac{i2\pi}{d}(d-1)}\\
+	\end{array} \right), \,\,
+X = \left( \begin{array}{cccc}
+	0 & ... & 0 & 1\\
+	1 & 0 & ... & 0\\
+	0 & \ddots & \ddots & \vdots\\
+	0 & 0 & 1 & 0\\
+	\end{array} \right)
+\end{equation}
+Related to the stabilizer states is the group of unitary matrices called the Clifford group. This group is defined as follows:
+\begin{equation}
+	\mathcal{C}_d = \{U \in \mathcal{U}(d) | \,\forall P \in \mathcal{D}, \exists Q \in \mathcal{D} \text{ where } U P U^\dag = Q\}
+\end{equation}
+(ie. Clifford operators map Weyl-Heisenberg operators to Weyl-Heisenberg operators). A main reason why this particular subset of states and operators is interesting is the Gottesman-Knill theorem \cite{Gottesman1998}. This was originally published by Gottesman and later expanded upon by Knill, but it states that \lq\lq{}A quantum circuit using only preparation of qudits in computational basis states, quantum gates from the Clifford group, and measurements in the computational basis, can be simulated efficiently on a classical computer.\rq\rq{} This makes the stabilizers a very important set of gates and states when contrasting the differences between quantum and classical computing.
+
+\chapter{The Discrete Wigner Function}
+\label{app:dwf}
+
+The discrete Wigner function was originally introduced by Wootters \cite{Wootters1987} as a discrete analogue to the continuous Wigner function, which is a representation of continuous quantum states in phase space. The discrete phase space can be thought of as a $d$-by-$d$ matrix (where $d$ is the dimension of the Hilbert space), where a representation of a quantum state has a particular value in each element of the matrix. The discrete phase space also has a matrix operator is associated with each point in the matrix, often called phase point operators and denoted by $A$, which have the following definition:
+\begin{alignat}{1}
+	A_{0,0} &= \frac{1}{d} \sum\limits_{x,z\in\mathbb{Z}_d} D_{x,z}\\
+	A_{x,z} &= D_{x,z}A_{0,0}D_{x,z}^\dag
+\end{alignat}
+where $D_{x,z}$ is a Weyl-Heisenberg displacement operator, as defined in \autoref{app:stabilizer}. Equivalently, the elements of the phase point operators can be expressed as
+\begin{alignat}{1}
+	(A_{x,z})_{k,l} &= \delta_{2x,k+l}e^{\frac{i2\pi}{d}z(k-l)}
+\end{alignat}
+where $\delta$ is the Kronecker Delta symbol and $2x$ and $k+l$ are taken modulo $d$. Throughout the rest of the report, the notation $\alpha = (x,z)$, or any other Greek letter, has been used for brevity and clarity. Two useful properties of the phase point operators follow from their definition.
+\begin{alignat}{1}
+	\text{Tr}(A_\alpha) &= 1\\
+	\text{Tr}(A_\alpha A_\beta) &= d \delta_{\alpha\beta}
+\end{alignat}
+
+The phase point operators form a basis for the space of $d$-by-$d$ matrices, so any quantum density operator $\rho$ representing a single qudit state can be expressed as a linear combination of phase point operators. Specifically,
+\begin{alignat}{1}
+	\rho &= \sum\limits_{\alpha \in \mathbb{Z}_d^2} W_\rho(\alpha) A_\alpha\\
+	U \rho U^\dag &= \sum\limits_{\alpha,\beta \in \mathbb{Z}_d^2} W_\rho(\beta) W_U(\beta | \alpha) A_\alpha
+\end{alignat}
+for a unitary matrix $U$. Using the above properties of phase point operators and rearranging the previous equations yields the following definitions for the discrete Wigner function for a density operator $\rho$, unitary matrix $U$, and measurement $E$:
+\begin{alignat}{1}
+	W_\rho(\alpha) &= \frac{1}{d}\text{Tr}(\rho A_\alpha)\\
+	W_U(\beta | \alpha) &= \frac{1}{d}\text{Tr}(A_\alpha U A_\beta U^\dag)\\
+	W_{E}(\alpha) &= \text{Tr}(E A_\alpha)
+\end{alignat}
+The following properties follow immediately from their definition:
+\begin{alignat}{1}
+	\sum\limits_{\alpha \in \mathbb{Z}_d^2} W_\rho(\alpha) &= 1\\
+	\sum\limits_{\alpha \in \mathbb{Z}_d^2} W_U(\beta | \alpha) &= 1\\
+	\sum\limits_{\beta \in \mathbb{Z}_d^2} W_U(\beta | \alpha) &= 1\\
+	\sum\limits_{\alpha \in \mathbb{Z}_d^2} W_E(\alpha) &= 1\\
+	\text{Tr}(\rho \rho') &= d \sum\limits_{\alpha \in \mathbb{Z}_d^2} W_\rho(\alpha) W_{\rho'}(\alpha)\\
+	W_{U_1 U_2}(\beta | \alpha) &= \sum\limits_{\gamma \in \mathbb{Z}_d^2} W_{U_2}(\beta | \gamma) W_{U_1}(\gamma | \alpha)
+\end{alignat}
+
+Since the phase point operators are Hermitian, the Wigner function will always produce real values. Specific bounds for the individual values are
+\begin{alignat}{1}
+	|W_\rho(\alpha)| &\le 1/d\\
+	|W_U(\beta | \alpha)| &\le 1\\
+	|W_E(\alpha) &\le 1
+\end{alignat}
+An interesting theorem arises from this formalism, named Hudson's Theorem for finite-dimension quantum systems, and its proof is given in \cite{Gross2006}. It states that the only states corresponding to an entirely non-negative discrete Wigner function are the stabilizer states. Additionally, the non-zero values of $W_\rho$ form a line if one plots the values in a matrix. This line is expressed as
+\begin{equation}
+	ax + bz = p \text{ (mod }d) \,\,\, a,b,p \in \mathbb{Z}_d
+\end{equation}
+and an example can be seen in \autoref{fig:stabps_b}. In light of the positivity of stabilizer states, the definition for the ``mana'' of a state and of a unitary operator are made as follows:
+\begin{alignat}{1}
+	\mathcal{M}_\rho &= \sum\limits_{\alpha \in \mathbb{Z}_d^2} |W_\rho(\alpha)|\\
+	\mathcal{M}_U &= \max\limits_{\alpha \in \mathbb{Z}_d^2} \sum\limits_{\beta \in \mathbb{Z}_d^2} |W_U(\beta | \alpha)|
+\end{alignat}
+One can intuitively think of this mana value as some measure of distance between a particular state and the stabilizer polytope, or the distance from some unitary operator to the Clifford group.
+
+
+\chapter{Proofs of Propositions}
+\label{app:proofs}
+\setcounter{prop}{0}
+
+%---Prop 1
+\begin{prop}\label{prop:manarho}
+For any quantum state $\rho, \mathcal{M}_\rho \le \sqrt{d}$.
+\end{prop}
+\begin{proof}
+	For any density operator $\rho$, $1 \ge $ Tr$(\rho^2)$, and by definition of the discrete Wigner function
+	\begin{alignat}{1}
+		1 \ge \text{Tr}(\rho^2) &= d \sum\limits_\alpha W_\rho(\alpha)^2 = d \sum\limits_\alpha |W_\rho(\alpha)|^2
+	\end{alignat}
+
+	Using the Cauchy-Schwarz Inequality,
+	\begin{alignat}{1}
+		\mathcal{M}_\rho^2 &= (\sum\limits_\alpha |W_\rho(\alpha)|)^2\\
+		& \le (\sum\limits_\alpha |W_\rho(\alpha)|^2) (\sum\limits_\alpha |1|^2)\\
+		&= d (d \sum\limits_\alpha |W_\rho(\alpha)|^2)\\
+		& \le d
+	\end{alignat}
+\end{proof}
+
+%---Prop 2
+\begin{prop}\label{prop:manaunitary}
+For any unitary operator $U, \mathcal{M}_U \le d$.
+\end{prop}
+\begin{proof}
+	\begin{alignat}{1}
+		U A_\alpha U^\dag &= \sum\limits_\beta W_U (\beta | \alpha) A_\beta\\
+		d &= \text{Tr}(A_\alpha A_\alpha)\\
+		&= \text{Tr}(U A_\alpha U^\dag U A_\alpha U^\dag)\\
+		&= \sum\limits_\beta d W_U(\beta | \alpha)^2\\
+		1 &= \sum\limits_\beta W_U(\beta | \alpha)^2
+	\end{alignat}
+	By the Cauchy-Schwartz Inequality,
+	\begin{alignat}{1}
+		\mathcal{M}_U(\alpha)^2 &= (\sum\limits_\beta |W_U(\beta | \alpha)|)^2\\
+		&\le (\sum\limits_\beta |W_U(\beta | \alpha)|^2) (\sum\limits_\beta |1|^2)\\
+		&= d^2\\
+		\mathcal{M}_U(\alpha) &\le d
+	\end{alignat}
+	Since this holds true for all $\alpha$, it holds for the maximum value of $\mathcal{M}_U(\alpha)$, which is the definition of $\mathcal{M}_U$.
+\end{proof}
+
+
+\end{appendices}
+\includepdf{./files/evaluation.pdf}
+
+\end{document}

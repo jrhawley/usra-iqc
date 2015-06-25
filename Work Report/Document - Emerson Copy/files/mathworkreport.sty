@@ -1,0 +1,52 @@
+\ProvidesPackage{mathworkreport}
+
+%---Packages
+\usepackage[backend=bibtex, style=numeric-comp, maxcitenames=1]{biblatex}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{xcolor,graphicx,setspace,sidecap}
+\usepackage{appendix}
+\usepackage[hidelinks]{hyperref}
+\usepackage{subfiles}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{flafter}
+\usepackage{wrapfig}
+\usepackage{amsfonts,textcomp}
+\usepackage{multicol}
+\usepackage{braket}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{sectsty}
+\usepackage{tocloft}
+\usepackage{subfig}
+\usepackage{dsfont}
+\usepackage{pdfpages}
+
+
+
+%---Definitions
+\author{James Hawley}
+\title{Quantum Communication Complexity and Raz's Problem}
+\date{August 27, 2014}
+\graphicspath{{./img/}}
+\addbibresource{./files/ref.bib}
+\definecolor{sec}{RGB}{46,116,181}
+\definecolor{sub}{RGB}{105,105,105}
+\input{./files/Qcircuit.tex}
+
+\newtheorem{prop}{Proposition}
+\newtheorem{corol}{Corollary}
+\newtheorem{prob}{Problem}
+
+% ---Formatting
+\parindent = 0cm
+\renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\contentsname}{Table of Contents}
+%\bibpunct{(}{)}{;}{a}{,}{,}
+\renewcommand*{\sectionautorefname}{Section}
+\renewcommand*{\subsectionautorefname}{Subsection}
+\newcommand*{\Appendixautorefname}{Appendix}
+\newcommand*{\propautorefname}{Proposition}
+\newcommand*{\corolautorefname}{Corollary}
+\newcommand*{\subfigureautorefname}{Figure}

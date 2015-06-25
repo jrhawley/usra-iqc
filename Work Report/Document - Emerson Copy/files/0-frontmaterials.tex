@@ -1,0 +1,78 @@
+\documentclass[../3Wworkreport.tex]{subfiles}
+\begin{document}
+
+%---Title Page
+\pagenumbering{gobble}
+\doublespacing
+\makeatletter
+\begin{titlepage}
+	\begin{center}
+		\huge \textbf{University of Waterloo}\\
+		\small\textcolor{sub}{Faculty of Mathematics\\}
+		\vfill
+		\huge \textbf{\@title}\\
+		\vfill
+		\normalsize Institute for Quantum Computing\\University of Waterloo\\Waterloo, ON\\
+		\vfill
+		\@author\\20423520\\3A Mathematical Physics\\\@date\\
+	\end{center}
+\end{titlepage}
+\makeatother
+\newpage
+
+%---Letter of Submittal
+\chapter*{Memorandum}
+\singlespacing
+\parskip = 0.7cm
+
+\makeatletter
+To: Joseph Emerson\\
+From: \@author\\
+Date: August 27, 2014\\
+Re: Work Report: \@title
+\vskip 0.5cm \leaders \vrule width \textwidth \vskip 0.4pt \nointerlineskip
+
+I have prepared the enclosed report, ``\@title'', for my 3A work report and for your research group at the Institute for Quantum Computing. This report, the third of four work reports that the Co-operative Education Program requires that I successfully complete as part of my BMath Co-op degree requirements, has not received academic credit and was written entirely by myself. 
+
+The research group you lead explores open questions in quantum foundations and quantum information science. My job as an Undergraduate Student Research Assisntant required me to research topics in classical and quantum information processing, understand and expand upon recent publications, and present my work to the rest of the group and other colleagues. This report is a study of Raz's problem and is a summary of my work this term.
+
+The Faculty of Mathematics requests that you evaluate this report for command of topic and technical content/analysis. Following your assessment, the report, together with your evaluation, will be submitted to the Math Undergrad Office for evaluation on campus by work report markers. The combined marks determine whether the report will receive credit and whether it will be considered for an award.
+
+I'd like to thank you, Richard Cleve, Mark Howard, and Joel Wallman for the helpful conversations over the past few months, as well as NSERC for providing funding for this research.
+
+\@author
+\makeatother
+\newpage
+
+%---Table of Contents and Figure/Table Lists
+\pagenumbering{roman}
+\setcounter{page}{2}
+\doublespacing
+
+\phantomsection
+\tableofcontents
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\listfigurename}
+\listoffigures
+\begingroup
+\let\clearpage\relax
+\listoftables
+\endgroup
+\addcontentsline{toc}{chapter}{\listtablename}
+\newpage
+
+%---Summary
+\doublespacing
+\parskip = 1cm
+\chapter*{Executive Summary}
+\label{chap:summary}
+\addcontentsline{toc}{chapter}{\protect{Executive Summary}}
+
+This report states and analyzes a family of classical algorithms that solves Raz\rq{s} problem, a problem in the communication complexity framework of distributed computing. These solutions are adaptations of the protocol developed by Pashayan et al., which is inspired by the stabilizer sub-theory of quantum computing and relies on the discrete Wigner function formalism \cite{Pashayan2014}.
+ 
+ The protocols\rq{} probabilistic convergence to the answer, their communication complexities, and how each protocol behaves in special cases of input variables are discussed. The family of protocols behaves in the following way: $O($log $d)$ communication complexity when stabilizer states and Clifford gates are guaranteed, $O(d$ log $d)$ when only the quantum gates are Clifford, $O(d^2$ log $d)$ when the input vector is a stabilizer state, and $O(d^3$ log $d)$ when there are no specifications on the input vector or gates. It performs as well as the quantum algorithm in the stabilizer sub-theory, but performs poorly in the general case.
+ 
+Areas for improvement include specifying better bounds on the mana of states and unitary matrices to give a tighter bound on required repetitions, determining bounds on the mana of unitary matrices in the extended Clifford hierarchy, and looking at a protocol that uses the nearest neighbour in the stabilizer framework.
+\newpage
+\end{document}

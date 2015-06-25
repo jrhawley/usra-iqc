@@ -1,0 +1,10 @@
+\documentclass[../3Wworkreport.tex]{subfiles}
+\doublespacing
+
+\begin{document}
+\chapter{Conclusions}
+\label{chap:conclusions}
+
+Classical protocols that solve Raz's problem approach $O(\sqrt{d})$ communication complexity, and in some cases perform better than this, have been developed and characterized. Some of these protocols will solve the problem exactly each time, and others will solve the problem probabilistically. The best case scenario arises when the two parties are working within the stabilizer subtheory or quantum computation, where the problem can be solved exactly in one round of communication, with a complexity of $O($log $d)$. This mirrors the complexity of the best known quantum protocol, and is a desirable result. This complexity, unfortunately, does not hold when extended into general matrices and unit vectors, as these same protocols will require $O(d$ log $d)$ complexity for Problem 1 and $O(d^3$ log $d)$ complexity for Problem 2. These solutions will converge probabilistically in multiple rounds of communication. These upper bounds for the protocols are not tight, however, so there may be room for improvement in the complexity of the solutions presented, or in developing new algorithms.
+
+\end{document}
