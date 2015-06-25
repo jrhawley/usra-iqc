@@ -1,0 +1,47 @@
+\documentclass[../3Wworkreport.tex]{subfiles}
+\begin{document}
+
+%---Title Page
+\dotitlepage{Institute for Quantum Computing}{University of Waterloo}{Waterloo, Ontario}
+
+%--- Memorandum ---
+\begin{memorandum}
+\makeatletter
+\section*{Memorandum}
+\begin{tabbing}
+	\=word1w2\=\kill
+	To: \>\>Joseph Emerson \\\\
+	From:\>\>\@author \\\\
+	Date:\>\>\@date \\\\
+	Re:\>\>Work Report: \@title\\
+	\begin{tikzpicture}
+		\draw (0,0) -- (16.5,0);
+	\end{tikzpicture}
+\end{tabbing}
+
+I have prepared the enclosed report, ``\@title'', for my \term work report and for your research group at the Institute for Quantum Computing. This report, the third of four work reports that the Co-operative Education Program requires that I successfully complete as part of my BMath Co-op degree requirements, has not received academic credit and was written entirely by myself. 
+
+The research group you lead explores open questions in quantum foundations and quantum information science. My position as an Undergraduate Student Research Assistant required that I research topics in classical and quantum information processing, understand and expand upon recent publications, and present my work to the rest of the group and other colleagues. This report is a study of Raz's problem and summarizes my work from this term.
+
+The Faculty of Mathematics requests that you evaluate this report for command of topic and technical content/analysis. Following your assessment, the report, together with your evaluation, will be submitted to the Math Undergrad Office for evaluation on campus by work report markers. The combined marks determine whether the report will receive credit and whether it will be considered for an award.
+
+I'd like to thank you, Richard Cleve, Mark Howard, and Joel Wallman for the helpful conversations throughout the term, as well as National Science and Energy Research Council for providing funding for this research.\\
+
+\@author
+\makeatother
+\newpage
+\end{memorandum}
+
+\dotoc
+
+%---Summary
+\tocsection{Executive Summary}
+\label{sec:summary}
+
+This report analyzes a family of classical protocols that solves Raz\rq{s} problem, a problem in the communication complexity framework of distributed computing. These solutions are adaptations of the algorithm developed by Pashayan et al. \parencite*{Pashayan2014}, which is inspired by the stabilizer sub-theory of quantum computing and relies on the discrete Wigner function formalism.
+ 
+ The protocols\rq{} probabilistic convergence to the answer, their communication complexities, and how each protocol behaves in special cases of input variables are discussed. The family of protocols behaves in the following way: $O($log $d)$ communication complexity when stabilizer states and Clifford gates are guaranteed, $O(d$ log $d)$ when only the quantum gates are Clifford, $O(d^2$ log $d)$ when the input vector is a stabilizer state, and $O(d^3$ log $d)$ when there are no specifications on the input vector or gates. The protocols perform as well as the quantum algorithm presented by Buhrman et al. \parencite*{Buhrman2009} in the stabilizer sub-theory, but perform poorly in general.
+ 
+Areas for improvement in performance include specifying better bounds on the mana of states and unitary matrices to give a tighter bound on required repetitions, determining bounds on the mana of unitary matrices in the extended Clifford hierarchy, and considering a protocol that uses the nearest neighbour in the stabilizer framework.
+\newpage
+\end{document}

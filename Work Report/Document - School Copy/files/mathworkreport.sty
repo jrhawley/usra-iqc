@@ -1,0 +1,123 @@
+\ProvidesPackage{mathworkreport}
+
+%---Packages
+\usepackage[backend=bibtex, citestyle=authoryear, bibstyle=authortitle, dashed=false, maxcitenames=1]{biblatex}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{tocloft}
+\usepackage{xcolor, graphicx, setspace, sidecap}
+\usepackage{tabularx, url, sectsty, dsfont, subfiles}
+\usepackage{flafter, wrapfig, subfig, float}
+\usepackage{amsmath, amsfonts, textcomp, braket, amsthm, amssymb}
+\usepackage{pdfpages}
+\usepackage{tikz}
+\usepackage{appendix}
+\usepackage[hidelinks]{hyperref}
+\usepackage[nameinlink]{cleveref}
+
+
+%---Definitions
+\author{James Hawley}
+\date{August 27, 2014}
+\title{Quantum Communication Complexity and Raz\rq{}s Problem}
+\newcommand{\term}{3A }
+\newcommand{\studentnumber}{20423520}
+\graphicspath{{./img/}}
+\addbibresource{./files/ref.bib}
+
+\newtheorem{prop}{Proposition}
+\newtheorem{corol}{Corollary}
+\newtheorem{prob}{Problem}
+
+%Title Page { Workplace } { Employer} { Location }
+\newcommand{\dotitlepage}[3]{
+	\pagenumbering{gobble}
+	\doublespacing
+	\makeatletter
+	\begin{titlepage}
+	\begin{center}
+		\huge \textbf{University of Waterloo}\\
+		\normalsize Faculty of Mathematics\\
+		\vfill
+		\huge \textbf{\@title}\\
+		\vfill
+		\normalsize #1\\#2\\#3\\
+		\vfill
+		\@author\\ \studentnumber\\ \term Mathematical Physics\\ \@date\\
+	\end{center}
+	\end{titlepage}
+	\makeatother
+	\newpage
+}
+
+%Memorandum
+\newenvironment{memorandum}{
+\begin{singlespace}}{
+\end{singlespace}
+\thispagestyle{empty}
+\newpage
+}
+
+%Table of Contents and List of Figures and Tables
+\newcommand{\dotoc}{
+	\pagenumbering{roman}
+	\doublespacing
+	\setcounter{page}{2}
+
+	\phantomsection
+	\tableofcontents
+	\newpage
+	\phantomsection
+	\addcontentsline{toc}{section}{\listfigurename}
+	\listoffigures
+	\begingroup
+		\let\clearpage\relax
+		\listoftables
+	\endgroup
+	\addcontentsline{toc}{section}{\listtablename}
+	\newpage
+}
+
+%References
+\newcommand{\doreferences}{
+	\newpage
+	\phantomsection
+	\renewbibmacro{in:}{}
+	\printbibliography[title=References]
+	\addcontentsline{toc}{section}{References}
+	\newpage
+}
+
+
+% ---Formatting
+\parindent = 0cm
+\doublespacing
+\addtolength{\parskip}{\baselineskip}
+\setlength{\cftsecnumwidth}{25pt}
+\setlength{\parskip}{1em}
+
+\renewcommand{\contentsname}{Table of Contents}
+\renewcommand{\cftfigpresnum}{Figure }
+\renewcommand{\cftfigaftersnum}{ --- }
+\renewcommand{\cftfignumwidth}{65pt}
+\renewcommand{\cfttabpresnum}{Table }
+\renewcommand{\cfttabaftersnum}{ --- }
+\renewcommand{\cfttabnumwidth}{65pt}
+\newcommand{\tocsection}[1]{
+	\section*{#1}
+	\addcontentsline{toc}{section}{#1}
+}
+
+\renewcommand{\thesection}{\arabic{section}.0}
+\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
+\numberwithin{equation}{subsection}
+
+\crefname{prop}{Proposition}{Propositions}
+\crefname{corol}{Corollary}{Corollaries}
+\renewcommand*{\nameyeardelim}{\addcomma\addspace}
+\urlstyle{same}
+%\renewcommand{\sectionautorefname}{Section}
+%\renewcommand{\subsectionautorefname}{Subsection}
+%\newcommand{\Appendixautorefname}{Appendix}
+%\newcommand{\propautorefname}{Proposition}
+%\newcommand{\corolautorefname}{Corollary}
+%\newcommand{\subfigureautorefname}{Figure}

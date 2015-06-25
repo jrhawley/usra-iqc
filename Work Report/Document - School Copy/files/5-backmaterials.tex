@@ -1,0 +1,239 @@
+\documentclass[../3Wworkreport.tex]{subfiles}
+\begin{document}
+
+\doreferences
+
+\appendix
+\tocsection{Appendices}
+\renewcommand{\thesubsection}{\Alph{subsection}}
+\renewcommand{\theequation}{\thesubsection.\arabic{equation}}
+
+\subsection{The Stabilizer Sub-theory}
+\label{app:stabilizer}
+
+The stabilizers states are the set of eigenstates of the Weyl-Heisenberg operators. The set of Weyl-Heisenberg operators is defined as follows:
+\begin{equation}
+	\mathcal{D} = \{D_{x,z} = \omega^{-2^{-1}xz}Z^zX^x | x,z \in \mathbb{Z}_d\}
+\end{equation}
+where $\omega = e^{\frac{i2\pi}{d}}$ and $2^{-1}$ is the multiplicative inverse of 2 modulo $d$. $X$ and $Z$ are $d$-dimensional generalizations of the two-dimensional Pauli matrices $X$ and $Z$, and are defined by their action on basis vectors.
+\begin{alignat}{1}
+	X\ket{k} = \ket{k + 1 \text{ (mod }d)}\\
+	Z\ket{k} = \omega^k\ket{k}
+\end{alignat}
+Equivalently, their matrices take the forms
+\begin{equation}
+Z = \left( \begin{array}{cccc}
+	1 & 0 & ... & 0\\
+	0 & e^{\frac{i2\pi}{d}} &  & \vdots\\
+	\vdots & & \ddots & \\
+	0 & ... & 0 & e^{\frac{i2\pi}{d}(d-1)}\\
+	\end{array} \right), \,\,
+X = \left( \begin{array}{cccc}
+	0 & ... & 0 & 1\\
+	1 & 0 & ... & 0\\
+	0 & \ddots & \ddots & \vdots\\
+	0 & 0 & 1 & 0\\
+	\end{array} \right)
+\end{equation}
+Related to the stabilizer states is the group of unitary matrices called the Clifford group. This group is defined as follows:
+\begin{equation}
+	\mathcal{C}_d = \{U \in \mathcal{U}(d) | \,\forall P \in \mathcal{D}, \exists Q \in \mathcal{D} \text{ where } U P U^\dag = Q\}
+\end{equation}
+(Clifford operators map Weyl-Heisenberg operators to Weyl-Heisenberg operators). One reason why this particular subset of states and operators is interesting is the consequences of the Gottesman-Knill theorem. This was originally published by Gottesman and later expanded upon by Knill, and states that \lq\lq{}A quantum circuit using only preparation of qudits in computational basis states, quantum gates from the Clifford group, and measurements in the computational basis, can be simulated efficiently on a classical computer\rq\rq{} \parencite{Gottesman1998}. This makes the stabilizers a very important set of gates and states when contrasting the differences between quantum and classical computing.
+
+\newpage
+\subsection{The Discrete Wigner Function}
+\label{app:dwf}
+
+The discrete Wigner function was originally introduced by Wootters as a discrete analogue to the continuous Wigner function, which is a representation of continuous quantum states in phase space \parencite{Wootters1987}. The discrete phase space can be thought of as a $d$-by-$d$ matrix (where $d$ is the dimension of the Hilbert space), where a representation of a quantum state has a particular value in each element of the matrix. The discrete phase space also has a matrix operator associated with each point in the matrix, often called phase point operators and denoted by $A$. The phase point operators have the following definition:
+\begin{alignat}{1}
+	A_{0,0} &= \frac{1}{d} \sum\limits_{x,z\in\mathbb{Z}_d} D_{x,z}\\
+	A_{x,z} &= D_{x,z}A_{0,0}D_{x,z}^\dag
+\end{alignat}
+where $D_{x,z}$ is a Weyl-Heisenberg displacement operator, as defined in \Cref{app:stabilizer}. Equivalently, the elements of the phase point operators can be expressed as
+\begin{alignat}{1}
+	(A_{x,z})_{k,l} &= \delta_{2x,k+l}e^{\frac{i2\pi}{d}z(k-l)}
+\end{alignat}
+where $\delta$ is the Kronecker Delta symbol, and $2x$ and $k+l$ are taken modulo $d$. Throughout the report, the notation $\alpha = (x,z)$, or any other Greek letter, has been used for brevity and clarity. Two useful properties of the phase point operators follow from their definition.
+\begin{alignat}{1}
+	\text{Tr}(A_\alpha) &= 1\\
+	\text{Tr}(A_\alpha A_\beta) &= d \delta_{\alpha\beta}
+\end{alignat}
+
+The phase point operators form a basis for the space of $d$-by-$d$ matrices, so any quantum density operator $\rho$ representing a single qudit state can be expressed as a linear combination of phase point operators. Specifically,
+\begin{alignat}{1}
+	\rho &= \sum\limits_{\alpha \in \mathbb{Z}_d^2} W_\rho(\alpha) A_\alpha\\
+	U \rho U^\dag &= \sum\limits_{\alpha,\beta \in \mathbb{Z}_d^2} W_\rho(\beta) W_U(\beta | \alpha) A_\alpha
+\end{alignat}
+for a unitary matrix $U$. Using the above properties of phase point operators and rearranging the previous equations yields the following definitions for the discrete Wigner function for a density operator $\rho$, unitary matrix $U$, and measurement $E$, respectively:
+\begin{alignat}{1}
+	W_\rho(\alpha) &= \frac{1}{d}\text{Tr}(\rho A_\alpha)\\
+	W_U(\beta | \alpha) &= \frac{1}{d}\text{Tr}(A_\alpha U A_\beta U^\dag)\\
+	W_{E}(\alpha) &= \text{Tr}(E A_\alpha)
+\end{alignat}
+The properties below follow immediately from the discrete Wigner function definition:
+\begin{alignat}{1}
+	\sum\limits_{\alpha \in \mathbb{Z}_d^2} W_\rho(\alpha) &= 1\\
+	\sum\limits_{\alpha \in \mathbb{Z}_d^2} W_U(\beta | \alpha) &= 1\\
+	\sum\limits_{\beta \in \mathbb{Z}_d^2} W_U(\beta | \alpha) &= 1\\
+	\sum\limits_{\alpha \in \mathbb{Z}_d^2} W_E(\alpha) &= 1\\
+	\text{Tr}(\rho \rho') &= d \sum\limits_{\alpha \in \mathbb{Z}_d^2} W_\rho(\alpha) W_{\rho'}(\alpha)\\
+	W_{U_1 U_2}(\beta | \alpha) &= \sum\limits_{\gamma \in \mathbb{Z}_d^2} W_{U_2}(\beta | \gamma) W_{U_1}(\gamma | \alpha)
+\end{alignat}
+
+Since the phase point operators are Hermitian, the Wigner function will always produce real values. Specific bounds for the individual values are
+\begin{alignat}{1}
+	|W_\rho(\alpha)| &\le 1/d\\
+	|W_U(\beta | \alpha)| &\le 1\\
+	|W_E(\alpha)| &\le 1
+\end{alignat}
+\parencite{Pashayan2014}. An interesting theorem arises from this formalism, named Hudson's Theorem for finite-dimension quantum systems, and its proof is given by Gross \parencite*{Gross2006}. It proves that the only quantum states corresponding to an entirely non-negative discrete Wigner function are the stabilizer states. Additionally, this theorem implies that the non-zero values of $W_\rho$ form a line if one plots the values in a matrix. This line is expressed as:
+\begin{equation}
+	ax + bz = p \text{ (mod }d) \,\,\, a,b,p \in \mathbb{Z}_d
+\end{equation}
+and an example can be seen in \Cref{fig:stabps_b}. In light of the positivity of stabilizer states, the definition for the ``mana'' of a state and of a unitary operator are made as follows:
+\begin{alignat}{1}
+	\mathcal{M}_\rho &= \sum\limits_{\alpha \in \mathbb{Z}_d^2} |W_\rho(\alpha)|\\
+	\mathcal{M}_U &= \max\limits_{\alpha \in \mathbb{Z}_d^2} \sum\limits_{\beta \in \mathbb{Z}_d^2} |W_U(\beta | \alpha)|\\
+	\mathcal{M}_E &= \max\limits_{\alpha \in \mathbb{Z}_d^2} \sum\limits_{k=1}^{d} |W_{E_k} (\alpha)|
+\end{alignat}
+where $E$ is the family of basis measurements, and $E_k$ is an individual basis measurement. One can intuitively think of this mana value as some measure of distance between a particular state and the stabilizer polytope, or the distance from some unitary operator to the Clifford group.
+
+\newpage
+\subsection{Proofs of Propositions}
+\label{app:proofs}
+\setcounter{prop}{0}
+
+%---Prop 1
+\begin{prop}\label{prop:manarho}
+For any quantum state $\rho, \mathcal{M}_\rho \le \sqrt{d}$.
+\end{prop}
+\begin{proof}
+	For any density operator $\rho$, $1 \ge $ Tr$(\rho^2)$, and by definition of the discrete Wigner function
+	\begin{alignat}{1}
+		1 \ge \text{Tr}(\rho^2) &= d \sum\limits_\alpha W_\rho(\alpha)^2 = d \sum\limits_\alpha |W_\rho(\alpha)|^2
+	\end{alignat}
+
+	Using the Cauchy-Schwarz Inequality,
+	\begin{alignat}{1}
+		\mathcal{M}_\rho^2 &= (\sum\limits_\alpha |W_\rho(\alpha)|)^2\\
+		& \le (\sum\limits_\alpha |W_\rho(\alpha)|^2) (\sum\limits_\alpha |1|^2)\\
+		&= d (d \sum\limits_\alpha |W_\rho(\alpha)|^2)\\
+		& \le d
+	\end{alignat}
+	It is not certain whether equality ever holds, so this inequality may be able to be made tighter.
+\end{proof}
+\newpage
+
+%---Prop 2
+\begin{prop}\label{prop:manaunitary}
+For any unitary operator $U, \mathcal{M}_U \le d$.
+\end{prop}
+\begin{proof}
+	\begin{alignat}{1}
+		U A_\alpha U^\dag &= \sum\limits_\beta W_U (\beta | \alpha) A_\beta\\
+		d &= \text{Tr}(A_\alpha A_\alpha)\\
+		&= \text{Tr}(U A_\alpha U^\dag U A_\alpha U^\dag)\\
+		&= \sum\limits_\beta d W_U(\beta | \alpha)^2\\
+		1 &= \sum\limits_\beta W_U(\beta | \alpha)^2
+	\end{alignat}
+	By the Cauchy-Schwartz Inequality,
+	\begin{alignat}{1}
+		\mathcal{M}_U(\alpha)^2 &= (\sum\limits_\beta |W_U(\beta | \alpha)|)^2\\
+		&\le (\sum\limits_\beta |W_U(\beta | \alpha)|^2) (\sum\limits_\beta |1|^2)\\
+		&= d^2\\
+		\mathcal{M}_U(\alpha) &\le d
+	\end{alignat}
+	Since this holds true for all $\alpha$, it holds for the maximum value of $\mathcal{M}_U(\alpha)$, which is the definition of $\mathcal{M}_U$. It is not certain whether equality ever holds, so this inequality may be able to be made tighter.
+\end{proof}
+
+
+\newpage
+\subsection{Protocol 1: Solution to Problem 1}
+\label{app:protocol1}
+\begin{enumerate}
+	\item
+		Let $\rho = \ket{\psi}\bra{\psi}$, and let $W_\rho$ and $\mathcal{M}_\rho$ be as defined in \Cref{app:dwf}.
+	\item
+		Alice samples a value $\alpha \in \mathbb{Z}_d^2$ according to the weighted probability distribution 
+		\begin{equation}
+			\text{Pr}(\alpha) = \frac{|W_\rho(\alpha)|}{\mathcal{M}_\rho}
+		\end{equation}
+		and sends $\alpha$ to Bob. She also sends Sgn($W_\rho(\alpha)$) and $\mathcal{M}_\rho$ (some positive real number). Alice will need to send back a truncated value of $\mathcal{M}_\rho$, denoted $\hat{\mathcal{M}}_\rho$, since sending the entire real number can in principle use an infinite amount of information. How precise this truncated value needs to be is discussed in \Cref{subsec:complexity}.
+
+	\item
+		Bob samples possible measurement outcomes from the distribution
+		\begin{equation}
+			\text{Pr}(O = k | \alpha) = |W_{E_k}(\alpha)|
+		\end{equation}
+
+	\item
+		Bob sets the value
+		\begin{equation}
+			r = \hat{\mathcal{M}}_\rho W_{E_k}(\alpha) \text{Sgn}(W_\rho(\alpha))
+		\end{equation}
+		He can regard this value as a realization of some random variable $R$, whose probability distribution is given by
+		\begin{equation}
+			\text{Pr}(R = r) = \frac{|W_\rho(\alpha)|}{\mathcal{M}_\rho}
+		\end{equation}
+
+	\item
+		Alice and Bob repeat steps 2-4 $T_1$ times, and Bob calculates $\hat{R}$, the sample average of $R$ over the $T_1$ repetitions. The particular value for $T_1$ is another topic of interest, and is discussed in \Cref{subsec:convergence_repetitions}. As shown by Pashayan et al. \parencite*{Pashayan2014},
+		\begin{equation}
+			\mathbb{E}(R) = \text{Pr}(E_k| \rho)
+		\end{equation}
+		where $\mathbb{E}(R)$ is the expected value of $R$. By doing this, Bob can approximate the measurement probabilities and create an estimate, $\hat{x}$, for the vector $x$.
+
+	\item
+		On his computer, since Bob has the vector $\hat{x}$, he computes d($\hat{x}, M_0)$, which does not require any further communication, and outputs 1 or 0, depending on the result.
+\end{enumerate}
+
+
+\newpage
+\subsection{Protocol 2: Solution to Problem 2}
+\label{app:protocol2}
+\begin{enumerate}
+	\item
+		Let $\rho = \ket{\psi}\bra{\psi}$, and let $W_\rho$ and $\mathcal{M}_\rho$ be as defined in \Cref{app:dwf}.
+	\item
+		Alice samples a value $\alpha \in \mathbb{Z}_d^2$ according to the weighted probability distribution 
+		\begin{equation}
+			\text{Pr}(\alpha) = \frac{|W_\rho(\alpha)|}{\mathcal{M}_\rho}
+		\end{equation}
+		and sends $\alpha$ to Bob.
+
+	\item
+		Bob has the orthogonal (which is, by definition, unitary) matrix $U$, so by using the Wigner representation of $U$, $W_U$, he now samples $\beta \in \mathbb{Z}_d^2$ according to the distribution
+		\begin{equation}
+			\text{Pr}(\beta|\alpha) = \frac{|W_U(\beta|\alpha)|}{\mathcal{M}_U(\alpha)}
+		\end{equation}
+		Bob sends $\beta$ to Alice, along with Sgn($W_U(\beta|\alpha)$) and $\hat{\mathcal{M}}_U(\alpha)$. Like in the previous protocol, the precision to which Bob can send back $\hat{\mathcal{M}}_U(\alpha)$ needs to be specified. This is also discussed in \Cref{subsec:complexity}.
+
+	\item
+		Alice samples possible measurement outcomes from the distribution
+		\begin{equation}
+			\text{Pr}(O = k | \beta) = |W_{E_k}(\beta)|
+		\end{equation}
+
+	 \item
+		Alice sets the value
+		\begin{equation}
+			r = \hat{\mathcal{M}}_U(\alpha) \mathcal{M}_\rho W_{E_k}(\beta) \text{Sgn}(W_\rho(\alpha) W_U(\beta|\alpha))
+		\end{equation}
+		Alice regards this value as a realization of some random variable $R$, whose probability distribution is given by
+		\begin{equation}
+			\text{Pr}(R = r) = \frac{|W_\rho(\alpha)|}{\mathcal{M}_\rho} \frac{|W_U(\beta|\alpha)|}{\mathcal{M}_U(\alpha)}
+		\end{equation}
+
+	\item
+		Alice and Bob repeat steps 2-5 $T_2$ times, and Alice calculates $\hat{R}$, the sample average of $R$ over the $T_2$ repetitions (this value is also be discussed in \Cref{subsec:convergence_repetitions}). As shown by Pashayan et al. \parencite*{Pashayan2014},
+		\begin{equation}
+			\mathbb{E}(R) = \text{Pr}(E_k| \rho, U)
+		\end{equation}
+		By doing this, Alice can approximate the measurement probabilities and create an estimate, $\hat{v} \approx Ux$.
+
+	\item
+		Alice computes d($\hat{v}, M_0)$, which does not require any communication, and outputs 1 or 0, depending on the result. 
+\end{enumerate}
+
+\end{document}
