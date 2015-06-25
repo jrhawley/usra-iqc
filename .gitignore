@@ -8,3 +8,6 @@
 *.blg
 *.lof
 *.lot
+*.bbl
+*.run.xml
+*-blx.bib
